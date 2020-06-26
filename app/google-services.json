@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "528576884408",
+    "firebase_url": "https://datalogger-58b56.firebaseio.com",
+    "project_id": "datalogger-58b56",
+    "storage_bucket": "datalogger-58b56.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528576884408:android:47588c0b0a665922f34e4d",
+        "android_client_info": {
+          "package_name": "com.embitel.datalogger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "528576884408-6a04bb3sebi6tdtlleigbler5dkftu2v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIzBr8PetzWynukafKyMYzrpj7rqSaUEA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "528576884408-6a04bb3sebi6tdtlleigbler5dkftu2v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

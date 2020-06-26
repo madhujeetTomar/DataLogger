@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="com.embitel.datalogger.databinding.FragmentDashboardBinding">
+
+        <import type="android.view.View" />
+
+        <import type="android.widget.EditText" />
+
+        <variable
+            name="model"
+            type="com.embitel.datalogger.ui.settings.SettingViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="60dp"
+            tools:context=".ui.settings.SettingsFragment">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@android:color/darker_gray">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="10dp"
+                    android:text="Settings"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onCheckedChanged="@{(switch, checked) -> model.gpsSwitchCheckedChanged(checked)}"
+                android:padding="10dp"
+                android:switchPadding="10dp"
+                android:text="Global Positioning System"
+                android:textStyle="bold" />
+
+            <Switch
+                android:id="@+id/switch2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onCheckedChanged="@{(switch, checked) -> model.dndSwitchCheckedChanged(checked)}"
+                android:padding="10dp"
+                android:switchPadding="10dp"
+                android:text="Do Not Disturb"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="5dp"
+                android:text="Select number of retries for Bluetooth Connection:"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner_ble_call_retry"
+                style="@style/Widget.AppCompat.Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/dropdownListPreferredItemHeight"
+                android:layout_margin="10dp"
+                android:background="@drawable/spinner_bg"
+                android:dropDownWidth="match_parent"
+                android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+                android:popupBackground="@android:color/white"
+                android:popupElevation="3dp"
+                android:stateListAnimator="@drawable/spinner_ani" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="5dp"
+                android:text="Select number of retries for API Call:"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner_api_call_retry"
+                style="@style/Widget.AppCompat.Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/dropdownListPreferredItemHeight"
+                android:layout_margin="10dp"
+                android:background="@drawable/spinner_bg"
+                android:dropDownWidth="match_parent"
+                android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+                android:popupBackground="@android:color/white"
+                android:popupElevation="3dp"
+                android:stateListAnimator="@drawable/spinner_ani" />
+
+
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@android:color/darker_gray">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="10dp"
+                    android:text="Personalization"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:weightSum="5">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width = "0dp"
+                    android:layout_height = "wrap_content"
+                    android:id = "@+id/layoutSpeed"
+                    android:layout_weight="4"
+                    style = "@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width = "match_parent"
+                        android:layout_height = "wrap_content"
+                        android:id = "@+id/et_speed"
+                        android:hint = "Enter Speed Limit"
+                        android:maxLength="2"
+                        android:inputType = "number"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btn_speed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:onClick="@{(view) -> model.sendSpeedValue(etSpeed.getText().toString())}"
+                    android:text="Send"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:weightSum="5">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width = "0dp"
+                    android:layout_height = "wrap_content"
+                    android:id = "@+id/layoutName"
+                    android:layout_weight="4"
+                    style = "@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width = "match_parent"
+                        android:layout_height = "wrap_content"
+                        android:id = "@+id/et_name"
+                        android:hint = "Enter Name"
+                        android:maxLength="10"
+                        android:inputType = "text"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btn_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:onClick="@{(view) -> model.sendNameValue(etName.getText().toString())}"
+                    android:text="Send"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:weightSum="5">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width = "0dp"
+                    android:layout_height = "wrap_content"
+                    android:id = "@+id/layoutEmail"
+                    android:layout_weight="4"
+                    style = "@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width = "match_parent"
+                        android:layout_height = "wrap_content"
+                        android:id = "@+id/et_number"
+                        android:hint = "Enter Phone Number"
+                        android:maxLength="10"
+                        android:inputType = "phone"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <Button
+                    android:id="@+id/btn_number"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:onClick="@{(view) -> model.sendNumberValue(etNumber.getText().toString())}"
+                    android:text="Send"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

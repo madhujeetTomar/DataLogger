@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name">DataLogger</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Settings</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="ble_not_supported">BLE is not supported</string>
+    <string name="label_data">Data:</string>
+    <string name="label_device_address">Device address:</string>
+    <string name="label_state">State:</string>
+    <string name="no_data">No data</string>
+    <string name="connected">Connected</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="title_devices">BLE Device Scan</string>
+    <string name="error_bluetooth_not_supported">Bluetooth not supported.</string>
+
+    <string name="unknown_device">Unknown device</string>
+    <string name="unknown_characteristic">Unknown characteristic</string>
+    <string name="unknown_service">Unknown service</string>
+
+    <string name="notifyTitle">提示</string>
+    <string name="gpsNotifyMsg">当前手机扫描蓝牙需要打开定位功能。</string>
+    <string name="setting">前往设置</string>
+    <string name="cancel">取消</string>
+
+    <string name="start_scan">"Start Scan"</string>
+    <string name="stop_scan">"Stop Scan"</string>
+    <string name="expand_search_settings">展开搜索设置</string>
+    <string name="retrieve_search_settings">收起搜索设置</string>
+    <string name="connect_fail">"Connection Failed!!!"</string>
+    <string name="active_disconnected">断开了</string>
+    <string name="please_open_blue">请先打开蓝牙</string>
+    <string name="select_operation_type">选择操作类型</string>
+    <string name="characteristic">特性</string>
+    <string name="data_changed">的数据变化：</string>
+    <string name="read">读</string>
+    <string name="write">写</string>
+    <string name="open_notification">打开通知</string>
+    <string name="close_notification">关闭通知</string>
+    <string name="service_list">服务列表</string>
+    <string name="characteristic_list">特征列表</string>
+    <string name="console">操作控制台</string>
+    <string name="name">设备广播名：</string>
+    <string name="mac">MAC:</string>
+    <string name="service">服务</string>
+    <string name="type">服务类型(主服务)</string>
+    <string name="scan_setting">在下面你可以配置需要扫描的设备的条件，可以为空</string>
+    <string name="setting_name">输入蓝牙设备广播名，多个之间以英文逗号隔开</string>
+    <string name="setting_mac">输入蓝牙设备mac地址</string>
+    <string name="setting_uuid">输入蓝牙设备UUID，多个之间以英文逗号隔开</string>
+    <string name="input_hex">请输入HEX格式指令</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">断开连接</string>
+    <string name="connect_success">Connection established successfully</string>
+
+    <string name="location_unknown">Location unknown</string>
+    <string name="location_updates_label">Location Updates</string>
+
+    <string name="permission_rationale">Location permission is needed for core functionality</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed for core
+        functionality.</string>
+    <string name="settings">Settings</string>
+    <string name="ok">OK</string>
+    <string name="request_location_updates">Request location updates</string>
+    <string name="remove_location_updates">Remove location updates</string>
+
+    <string name="location_updated">Location Updated: %1$s</string>
+    <string name="configured">Configured</string>
+    <string name="not_configured">Not Configured</string>
+</resources>
