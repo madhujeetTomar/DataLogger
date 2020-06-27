@@ -933,5 +933,18 @@ public class BleManager {
         }
     }
 
+    public BleDevice getBleDevice(String mac)
+    {
+        List<BleDevice> list = getAllConnectedDevice();
+        for (BleDevice bleDevice : list) {
+            if (bleDevice != null) {
+                if (bleDevice.getMac().equals(mac)) {
+                    return bleDevice;
+                }
+            }
+        }
+        return null;
+    }
+
 
 }

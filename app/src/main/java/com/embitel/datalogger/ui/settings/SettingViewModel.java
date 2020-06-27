@@ -58,6 +58,7 @@ public class SettingViewModel extends BaseViewModel {
      * @param speed
      */
     public void sendSpeedValue(String speed) {
+       if(!speed.isEmpty()){
         if(Integer.parseInt(speed)>50)
         {
             sendMaxSpeed(speed);
@@ -66,9 +67,9 @@ public class SettingViewModel extends BaseViewModel {
         {speed="30";
             sendMinSpeed("30");
         }
-
+SharedPreferencesManager.setPreference(SharedPreferenceConstant.SPEED_VALUE,speed);
         updateSettingsConfiguration(speed, Constants.ACTION_SEND_SPEED_VALUE, SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG_3, false);
-    }
+    }}
 
     private void sendMinSpeed(String speed) {
         mMinSpeedLimit.postValue(speed);
@@ -167,23 +168,11 @@ public class SettingViewModel extends BaseViewModel {
      */
     private void setSettingsValue(boolean value, String action, String characteristics) {
         if (value) {
-            try {
 
-                JSONObject jsonObject=new JSONObject();
-                jsonObject.put("w",1);
-                jsonObject.put("T",2);
-                updateSettingsConfiguration(jsonObject.toString(), action, characteristics, value);
-
-        /*    homeViewModel.updateSettingsConfiguration(jsonObject.toString(),Constants.ACTION_SEND_WEATHER_UPDATE,
-                    SampleGattAttributes.CURRENT_TIME,false);*/
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
+            updateSettingsConfiguration("1", action, characteristics, value);
 
         } else {
-            updateSettingsConfiguration("0101", action, characteristics, value);
+            updateSettingsConfiguration("0", action, characteristics, value);
         }
     }
 

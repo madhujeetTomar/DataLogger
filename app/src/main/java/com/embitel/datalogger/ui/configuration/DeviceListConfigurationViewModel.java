@@ -55,10 +55,9 @@ public class DeviceListConfigurationViewModel extends BaseViewModel {
                 if(bleDevice!=null)
                 {
 
-                if (!SharedPreferencesManager.getBLeDevice().isEmpty()) {
-                    BleDevice mBleDevice = new Gson().fromJson(SharedPreferencesManager.getBLeDevice(), BleDevice.class);
-                    Log.d("vALUE", "onScanning: "+mBleDevice);
-                    if (mBleDevice.getMac().equals(bleDevice.getMac())) {
+                if (!SharedPreferencesManager.getMacAddress().isEmpty()) {
+
+                    if (SharedPreferencesManager.getMacAddress().equals(bleDevice.getMac())) {
                         bleDevice.setConfigured(true);
                         mConfiguredBleDevice.postValue(bleDevice);
                     } else {

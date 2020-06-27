@@ -22,6 +22,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.embitel.datalogger.bleutils.Constants;
 import com.embitel.datalogger.bleutils.SampleGattAttributes;
 import com.embitel.datalogger.bleutils.SharedPreferenceConstant;
 import com.embitel.datalogger.bleutils.SharedPreferencesManager;
@@ -46,12 +47,11 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        if(!SharedPreferencesManager.getBLeDevice().isEmpty())
-        {
-            bleDevice = new Gson().fromJson(SharedPreferencesManager.getBLeDevice(), BleDevice.class);
+        if(!SharedPreferencesManager.getMacAddress().isEmpty()) {
+            bleDevice = BleManager.getInstance().getBleDevice(SharedPreferencesManager.getMacAddress());
         }
 
-        dashboardViewModel = ViewModelProviders.of(this).get(SettingViewModel.class);
+            dashboardViewModel = ViewModelProviders.of(this).get(SettingViewModel.class);
         fragmentDashboardBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard,
                 container, false);
         fragmentDashboardBinding.setModel(dashboardViewModel);
@@ -146,6 +146,6 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onResume() {
         super.onResume();
-        dashboardViewModel.readData(SampleGattAttributes.CURRENT_TIME);
+        //dashboardViewModel.readData(SampleGattAttributes.CURRENT_TIME);
     }
 }

@@ -11,4 +11,8 @@ public class SharedPreferenceConstant {
     public static final String RETRY_BLE_CONNECTION ="retry_ble_connect" ;
     public static final String SET_GPS_VALUE ="gps_value" ;
     public static final String SET_DND_VALUE ="dnd_value" ;
+    public static final String MAC_ADDRESS ="mac_addr" ;
+    public static final String SPEED_VALUE = "speed" ;
+    public static final String WEATHER ="weather" ;
+    public static final String TEMP ="temp" ;
 }

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.embitel.datalogger.R;
 import com.embitel.datalogger.blemodule.BleManager;
 import com.embitel.datalogger.blemodule.callback.BleGattCallback;
+import com.embitel.datalogger.blemodule.callback.BleScanCallback;
 import com.embitel.datalogger.blemodule.callback.BleWriteCallback;
 import com.embitel.datalogger.blemodule.data.BleDevice;
 import com.embitel.datalogger.blemodule.exception.BleException;
@@ -25,6 +26,7 @@ import com.embitel.datalogger.bleutils.Constants;
 import com.embitel.datalogger.bleutils.SampleGattAttributes;
 import com.embitel.datalogger.bleutils.SharedPreferencesManager;
 import com.embitel.datalogger.bleutils.Utils;
+import com.embitel.datalogger.ui.configuration.DeviceListConfigurationScreen;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
@@ -34,6 +36,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -128,9 +132,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        if(!SharedPreferencesManager.getBLeDevice().isEmpty())
+        if(!SharedPreferencesManager.getMacAddress().isEmpty())
         {
-         bleDevice= new Gson().fromJson(SharedPreferencesManager.getBLeDevice(), BleDevice.class);
+         bleDevice= BleManager.getInstance().getBleDevice(SharedPreferencesManager.getMacAddress());
          if(!BleManager.getInstance().isConnected(bleDevice))
          {
              connect(bleDevice);
@@ -140,10 +144,6 @@ public class MainActivity extends AppCompatActivity {
              sendBluetoothStatus(BLeConstants.CONNECTED);
              bindService(new Intent(MainActivity.this, LocationUpdatesService.class), mServiceConnection,
                      Context.BIND_AUTO_CREATE); }
-        }
-        else
-        {
-
         }
     }
     public BleDevice getBleDevice() {
@@ -180,8 +180,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onConnectFail(BleDevice bleDevice, BleException exception) {
               //  mMessage.postValue("Connection Failed!!!");
-                Toast.makeText(MainActivity.this,exception.getDescription(),Toast.LENGTH_SHORT).show();
-            }
+if(exception.getCode()==102)
+{
+Intent intent=new Intent(MainActivity.this, DeviceListConfigurationScreen.class);
+intent.putExtra("Configured",true);
+startActivity(intent);
+finish();
+}
+else {
+    Toast.makeText(MainActivity.this, exception.getDescription(), Toast.LENGTH_SHORT).show();
+}           }
 
             @Override
             public void onConnectSuccess(BleDevice bleDevice, BluetoothGatt gatt, int status) {
@@ -214,6 +222,37 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_OPEN_GPS) {
 
         }
+    }
+    void startScan() {
+        BleManager.getInstance().scan(new BleScanCallback() {
+            @Override
+            public void onScanStarted(boolean success) {
+
+            }
+
+            @Override
+            public void onLeScan(BleDevice bleDevice) {
+                super.onLeScan(bleDevice);
+            }
+
+            @Override
+            public void onScanning(BleDevice bleDevice) {
+
+
+            }
+
+            @Override
+            public void onScanFinished(List<BleDevice> scanResultList) {
+
+                for (BleDevice bleDevice:scanResultList
+                     ) {
+                    if(bleDevice.getMac().equals(SharedPreferencesManager.getMacAddress()))
+                    {
+                          connect(bleDevice);
+                    }
+                }
+            }
+        });
     }
 
 }

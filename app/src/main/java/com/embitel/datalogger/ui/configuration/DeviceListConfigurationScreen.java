@@ -49,6 +49,7 @@ public class DeviceListConfigurationScreen extends
     private DeviceListConfigurationViewModel deviceListConfigurationViewModel;
     private BleDevice mBleDevice, mConfiguredDevice;
     private List<BleDevice> bleDeviceList=new ArrayList<>();
+    private boolean isConfigured;
 
     @Override
     public int getBindingVariable() {
@@ -65,6 +66,7 @@ public class DeviceListConfigurationScreen extends
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDataBinding = getViewDataBinding();
+        isConfigured=getIntent().getBooleanExtra("Configured",false);
         deviceListConfigurationViewModel = ViewModelProviders.of(this).get(DeviceListConfigurationViewModel.class);
 
         Utils.checkLocationPermission(this);
@@ -97,6 +99,9 @@ public class DeviceListConfigurationScreen extends
             }
         });
 
+        if(isConfigured) {
+            deviceListConfigurationViewModel.startScan();
+        }
         //observing response
         deviceListConfigurationViewModel.scBLeDevices().observe(this, this::scannedBLeDevices);
         deviceListConfigurationViewModel.btnStatus().observe(this, this::scanStatus);
@@ -112,7 +117,7 @@ public class DeviceListConfigurationScreen extends
     }
 
     private void timeUpdateSuccessfully(String s) {
-        SharedPreferencesManager.setPreference(SharedPreferenceConstant.BLE_DEVICE, new Gson().toJson(mBleDevice));
+        SharedPreferencesManager.setPreference(SharedPreferenceConstant.MAC_ADDRESS,mBleDevice.getMac());
         //send Time data
         final Intent intent = new Intent(DeviceListConfigurationScreen.this, MainActivity.class);
         intent.putExtra(MainActivity.EXTRAS_DEVICE_DATA, mBleDevice);
@@ -162,7 +167,10 @@ public class DeviceListConfigurationScreen extends
         if(s.equals("Start Scan") && mConfiguredDevice!=null)
         {
            mBleDevice=mConfiguredDevice;
+           if(isConfigured)
+           {
             deviceListConfigurationViewModel.connect(mConfiguredDevice);
+        }
         }
     }
 

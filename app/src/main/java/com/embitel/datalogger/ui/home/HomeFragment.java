@@ -34,6 +34,7 @@ import com.embitel.datalogger.blemodule.data.BleDevice;
 import com.embitel.datalogger.bleutils.BLeConstants;
 import com.embitel.datalogger.bleutils.Constants;
 import com.embitel.datalogger.bleutils.SampleGattAttributes;
+import com.embitel.datalogger.bleutils.SharedPreferenceConstant;
 import com.embitel.datalogger.bleutils.SharedPreferencesManager;
 import com.embitel.datalogger.bleutils.Utils;
 import com.embitel.datalogger.databinding.FragmentHomeBinding;
@@ -61,6 +62,8 @@ public class HomeFragment extends Fragment {
     private StatusListener statusListener;
     AppContainer appContainer = App.getInstance().appContainer;
     private FragmentHomeBinding fragmentHomeBinding;
+    private String temperature="";
+    private String weather="";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -68,13 +71,13 @@ public class HomeFragment extends Fragment {
         fragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home,
                 container, false);
         myReceiver = new MyReceiver();
-        statusListener=new StatusListener();
+        statusListener = new StatusListener();
         appContainer = App.getInstance().appContainer;
 
         homeViewModel = appContainer.homeViewModelFactory.create();
         homeViewModel.getWeatherData().observe(this, this::getWeatherData);
-        homeViewModel.getData().observe(this,this::updateWeather);
-        homeViewModel.getError().observe(this,this::errorResult);
+        homeViewModel.getData().observe(this, this::updateWeather);
+        homeViewModel.getError().observe(this, this::errorResult);
         fragmentHomeBinding.imgStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,33 +90,36 @@ public class HomeFragment extends Fragment {
     }
 
     private void errorResult(String s) {
-    if(!BleManager.getInstance().isConnected(mBleDevice))
-    {
+        if (!BleManager.getInstance().isConnected(mBleDevice)) {
 
-        fragmentHomeBinding.txtStatus.setText(BLeConstants.DISCONNECT);
-    }
-        Toast.makeText(getActivity(),s,Toast.LENGTH_SHORT).show();
+            fragmentHomeBinding.txtStatus.setText(BLeConstants.DISCONNECT);
+        }
+        Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
 
     }
 
     private void updateWeather(String s) {
-        Log.d(TAG, "updateWeather: "+s);
+        Log.d(TAG, "updateWeather: " + s);
         //Toast.makeText(getActivity(),s, Toast.LENGTH_SHORT).show();
     }
 
     private void getWeatherData(WeatherResponse weatherResponse) {
-        fragmentHomeBinding.txTemp.setText(String.valueOf(weatherResponse.getMain().getTemp()) + (char) 0x00B0 + "C");
-        fragmentHomeBinding.txtCloud.setText(weatherResponse.getWeather().get(0).getMain() + ": " +
-                "" + weatherResponse.getWeather().get(0).getDescription());
+
+        temperature=String.format("%s%sC", String.valueOf(weatherResponse.getMain().getTemp()), (char) 0x00B0);
+        weather=String.format("%s: %s", weatherResponse.getWeather().get(0).getMain(), weatherResponse.getWeather().get(0).getDescription());
+        fragmentHomeBinding.txTemp.setText(temperature);
+        fragmentHomeBinding.txtCloud.setText(weather);
+        SharedPreferencesManager.setPreference(SharedPreferenceConstant.TEMP,temperature);
+        SharedPreferencesManager.setPreference(SharedPreferenceConstant.WEATHER,weather);
 
 
-        JSONObject jsonObject=new JSONObject();
+        JSONObject jsonObject = new JSONObject();
         try {
-        jsonObject.put("w",weatherResponse.getWeather().get(0).getDescription());
-            jsonObject.put("T",String.valueOf(weatherResponse.getMain().getTemp()));
+            jsonObject.put("w", weatherResponse.getWeather().get(0).getDescription());
+            jsonObject.put("T", String.valueOf(weatherResponse.getMain().getTemp()));
 
-            homeViewModel.updateSettingsConfiguration(jsonObject.toString(),Constants.ACTION_SEND_WEATHER_UPDATE,
-                    SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG_6,false);
+            homeViewModel.updateSettingsConfiguration(jsonObject.toString(), Constants.ACTION_SEND_WEATHER_UPDATE,
+                    SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG_6, false);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -126,10 +132,13 @@ public class HomeFragment extends Fragment {
         mBleDevice = ((MainActivity) getActivity()).getBleDevice();
         homeViewModel.getBleDevice(mBleDevice);
         Log.d(TAG, "onResume" + mBleDevice);
-        if(BleManager.getInstance().isConnected(mBleDevice))
-        {
+        if (BleManager.getInstance().isConnected(mBleDevice)) {
             fragmentHomeBinding.txtStatus.setText(BLeConstants.CONNECTED);
         }
+
+        fragmentHomeBinding.txTemp.setText(SharedPreferencesManager.getTemperature());
+        fragmentHomeBinding.txtCloud.setText(SharedPreferencesManager.getWeather());
+        fragmentHomeBinding.textView6.setText(String.format("%sKMPH", SharedPreferencesManager.getSpeed()));
         fragmentHomeBinding.swGps.setChecked(SharedPreferencesManager.getGPSValue());
         fragmentHomeBinding.swDnd.setChecked(SharedPreferencesManager.getDNDValue());
 

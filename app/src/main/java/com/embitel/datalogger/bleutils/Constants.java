@@ -1,5 +1,7 @@
 package com.embitel.datalogger.bleutils;
 
+import com.embitel.datalogger.blemodule.data.BleDevice;
+
 public class Constants {
     //Weather Api APP ID
     public static final String APP_ID="7f6c6d11ba08c24b83a7920bd4cc612c";
@@ -28,4 +30,5 @@ public class Constants {
     public static final String SEND_STATUS ="ble_connection_status";
     public static final String ACTION_SEND_WEATHER_UPDATE = "action_send_weather_update";
     public static final String ACTION_SEND_BATTERY_LEVEL = "action_send_battery_level";
+    public static BleDevice bleDevice;
 }
