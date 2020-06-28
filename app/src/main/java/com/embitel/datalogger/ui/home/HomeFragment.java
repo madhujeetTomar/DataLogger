@@ -119,7 +119,7 @@ public class HomeFragment extends Fragment {
             jsonObject.put("T", String.valueOf(weatherResponse.getMain().getTemp()));
 
             homeViewModel.updateSettingsConfiguration(jsonObject.toString(), Constants.ACTION_SEND_WEATHER_UPDATE,
-                    SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG_6, false);
+                    SampleGattAttributes.CURRENT_TIME, false);
         } catch (JSONException e) {
             e.printStackTrace();
         }

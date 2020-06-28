@@ -26,7 +26,7 @@ public class HomeRepository {
     }
     public void sendData(ResponseListener<String> response, BleDevice bleDevice, String value, String characteristics) {
 
-        BleManager.getInstance().write(bleDevice, SampleGattAttributes.BLE_SERVICE_1,
+        BleManager.getInstance().write(bleDevice, SampleGattAttributes.TIME_SERVICE,
                 characteristics, HexUtil.stringToByte(value), new BleWriteCallback() {
                     @Override
                     public void onWriteSuccess(int current, int total, byte[] justWrite) {

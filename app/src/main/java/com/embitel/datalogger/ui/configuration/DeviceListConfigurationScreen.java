@@ -147,7 +147,7 @@ public class DeviceListConfigurationScreen extends
                 e.printStackTrace();
             }
             deviceListConfigurationViewModel.updateSettingsConfiguration(jsonObject.toString(), Constants.ACTION_SEND_TIME,
-                 SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG_7,mBleDevice
+                 SampleGattAttributes.CURRENT_TIME,mBleDevice
          );
         }
     }

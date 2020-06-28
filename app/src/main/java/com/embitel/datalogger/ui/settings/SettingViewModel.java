@@ -68,7 +68,7 @@ public class SettingViewModel extends BaseViewModel {
             sendMinSpeed("30");
         }
 SharedPreferencesManager.setPreference(SharedPreferenceConstant.SPEED_VALUE,speed);
-        updateSettingsConfiguration(speed, Constants.ACTION_SEND_SPEED_VALUE, SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG_3, false);
+        updateSettingsConfiguration(speed, Constants.ACTION_SEND_SPEED_VALUE, SampleGattAttributes.CURRENT_TIME, false);
     }}
 
     private void sendMinSpeed(String speed) {
@@ -128,7 +128,7 @@ SharedPreferencesManager.setPreference(SharedPreferenceConstant.SPEED_VALUE,spee
      * @param name
      */
     public void sendNameValue(String name) {
-        updateSettingsConfiguration(name, Constants.ACTION_SEND_NAME, SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG_4, false);
+        updateSettingsConfiguration(name, Constants.ACTION_SEND_NAME, SampleGattAttributes.CURRENT_TIME, false);
     }
 
     /**
@@ -146,7 +146,7 @@ SharedPreferencesManager.setPreference(SharedPreferenceConstant.SPEED_VALUE,spee
      * @param value
      */
     public void dndSwitchCheckedChanged(boolean value) {
-        setSettingsValue(value, Constants.ACTION_SEND_DND_DATA, SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG_1);
+        setSettingsValue(value, Constants.ACTION_SEND_DND_DATA, SampleGattAttributes.CURRENT_TIME);
     }
 
     /**
@@ -156,7 +156,7 @@ SharedPreferencesManager.setPreference(SharedPreferenceConstant.SPEED_VALUE,spee
      */
 
     public void gpsSwitchCheckedChanged(boolean value) {
-        setSettingsValue(value, Constants.ACTION_SEND_GPS_DATA, SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG_2);
+        setSettingsValue(value, Constants.ACTION_SEND_GPS_DATA, SampleGattAttributes.CURRENT_TIME);
     }
 
     /**
