@@ -127,7 +127,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity())
                 .setContentText(text)
-                .setContentTitle("HUD Connect")
+                .setContentTitle("Data Logger")
                 .setOngoing(true)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
